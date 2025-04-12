@@ -21,6 +21,7 @@ class Solution {
     public static List<Integer> levelorder(TreeNode root,int lvl, int n){
         List<Integer> list = new ArrayList<>();
         if(root==null) return list ;
+        if(lvl>n) return list;
         if(lvl==n){
             list.add(root.val);
         }else {
