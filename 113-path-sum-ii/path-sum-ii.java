@@ -14,31 +14,20 @@
  * }
  */
 class Solution {
-    public static void sum(TreeNode root,ArrayList<Integer> list,ArrayList<ArrayList<Integer>> ans){
-        if(root==null) return ;
-        ArrayList<Integer> newList = new ArrayList<>(list);
-        newList.add(root.val);
-        if(root.right==null && root.left==null){
-        ans.add(newList);
-        return; 
+    public static void dfs(TreeNode root,int remainingsum,ArrayList<Integer> path, List<List<Integer>> result){
+        if(root==null) return;
+        ArrayList<Integer> newPath = new ArrayList<>(path);
+         newPath.add(root.val);
+        if(root.left==null && root.right==null && remainingsum==root.val){
+            result.add(newPath);
+            return;
         }
-        sum(root.left,newList,ans);
-        sum(root.right,newList,ans);
+        dfs(root.left,remainingsum-root.val,newPath,result);
+        dfs(root.right,remainingsum-root.val,newPath,result);
     }
     public List<List<Integer>> pathSum(TreeNode root, int targetSum) {
-        ArrayList<ArrayList<Integer>> ans = new ArrayList<>();
-        ArrayList<Integer>list = new ArrayList<>();
-        sum(root,list,ans);
-        List<List<Integer>> finalans = new ArrayList<>();
-        for(int i=0;i<ans.size();i++){
-            int total=0;
-            ArrayList<Integer> subList = ans.get(i);
-            for(int j=0;j<subList.size();j++){
-                total=total+subList.get(j);
-            }
-            if(total==targetSum) 
-           finalans.add(subList);
-        }
-        return finalans;
+        List<List<Integer>> result = new ArrayList<>();
+        dfs(root, targetSum, new ArrayList<>(), result);
+        return result;
     }
 }
