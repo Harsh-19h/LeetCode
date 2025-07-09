@@ -1,38 +1,23 @@
-/**
- * Definition for a binary tree node.
- * public class TreeNode {
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode() {}
- *     TreeNode(int val) { this.val = val; }
- *     TreeNode(int val, TreeNode left, TreeNode right) {
- *         this.val = val;
- *         this.left = left;
- *         this.right = right;
- *     }
- * }
- */
+// optimized (dont create another tree modify this only (in-place))
 class Solution {
-    public static void inorder(TreeNode root,ArrayList<Integer> arr){
+    public void inorder(TreeNode root, List<TreeNode> list){
         if(root==null) return;
-        inorder(root.left,arr);
-        arr.add(root.val);
-        inorder(root.right,arr);
-        return;
+        inorder(root.left,list);
+        list.add(root);
+        inorder(root.right,list);
     }
 
-    public static TreeNode balanced(ArrayList<Integer> arr,int low ,int high){
-        if(low>high)return null;
+    public TreeNode balanced( List<TreeNode> list,int low,int high){
+        if(low>high) return null;
         int mid = (low+high)/2;
-        TreeNode temp = new TreeNode(arr.get(mid));
-        temp.left = balanced(arr,low,mid-1);
-        temp.right = balanced(arr,mid+1,high);
-        return temp;
+        TreeNode root=list.get(mid);
+        root.left = balanced(list,low,mid-1);
+        root.right= balanced(list,mid+1,high);
+        return root;
     }
     public TreeNode balanceBST(TreeNode root) {
-        ArrayList<Integer>arr = new ArrayList<>();
-        inorder(root,arr);
-        return balanced(arr,0,arr.size()-1);
+      List<TreeNode> list = new ArrayList<>();
+      inorder(root,list); 
+      return balanced(list,0,list.size()-1); 
     }
 }
