@@ -1,17 +1,12 @@
+// (DFS) APPROACH
 class Solution {
-    public void bfs(List<List<Integer>> list,int source, boolean visited[]){
-        Queue<Integer> q = new LinkedList<>();
-        q.add(source);
-        while(!q.isEmpty()){
-            int front = q.poll();
-            for(int i=0;i<list.get(front).size();i++){
-                int curr = list.get(front).get(i);
-                if(visited[curr]==false){
-                    q.add(curr);
-                    visited[curr] =true;
-                }
-            }
+    public void dfs(List<List<Integer>> list,int source, boolean visited[]){
+        visited[source] = true;
+        for(int i=0;i<list.get(source).size();i++){
+            int curr = list.get(source).get(i);
+            if(visited[curr]==false) dfs(list,curr,visited);
         }
+        
     }
     public boolean validPath(int n, int[][] edges, int source, int destination) {
         List<List<Integer>> list = new ArrayList<>();
@@ -25,7 +20,7 @@ class Solution {
         }
         boolean visited[] = new boolean[n];
         visited[source] =true;
-        bfs(list,source,visited);
+        dfs(list,source,visited);
         if(visited[destination]== false) return false;
         return true;
     }
