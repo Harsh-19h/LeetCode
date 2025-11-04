@@ -1,34 +1,38 @@
 class Solution {
+    public boolean dfs(boolean visited[],List<List<Integer>> list, boolean path[],int i){
+        visited[i] = true;
+        path[i] = true;
+        for(int j=0;j<list.get(i).size();j++){
+            int curr = list.get(i).get(j);
+            if(path[curr]==true) return false;
+            else{
+                if(visited[curr]==false){
+                    if(dfs(visited,list,path,curr)==false) return false;
+                }
+            }
+        }
+        path[i] = false;
+        return true;
+    }
     public boolean canFinish(int n, int[][] pre) {
-        List<List<Integer>> list = new ArrayList<>();
+         List<List<Integer>> list = new ArrayList<>();
         for(int i=0;i<n;i++){
             list.add(new ArrayList<>());
         }
-        int indegree[] = new int[n];
+      
         for(int i=0;i<pre.length;i++){
             int a = pre[i][0];
             int b = pre[i][1];
             list.get(b).add(a);
-            indegree[a]++;
         }
-        Queue<Integer> q = new LinkedList<>();
+        boolean visited[] = new boolean[n];
+        boolean path[] = new boolean[n];
+
         for(int i=0;i<n;i++){
-            if(indegree[i]==0)
-             q.add(i);
+            if(visited[i]==false){
+                 if(dfs(visited,list,path,i)==false) return false;
+            } 
         }
-        int count =0;
-        while(!q.isEmpty()){
-            int curr = q.poll();
-            count++;
-            for(int i=0;i<list.get(curr).size();i++){
-                int top = list.get(curr).get(i);
-                indegree[top]--;
-                if(indegree[top]==0){
-                    q.add(top);
-                } 
-            }
-        }
-        if(count<n) return false;
         return true;
     }
 }
