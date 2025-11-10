@@ -1,52 +1,27 @@
+// using Bellman Ford Algorithm
 class Solution {
-    class pair implements Comparable<pair>{
-        int node;
-        int time;
-        pair(int node ,int time){
-            this.node = node;
-            this.time = time;
-        } 
-        public int compareTo(pair p){
-            if(p.time==this.time) return this.node-p.node;
-            return this.time-p.time;
-        }
-    }
     public int networkDelayTime(int[][] times, int n, int k) {
-       List<List<pair>> list = new ArrayList<>();
-       for(int i=0;i<=n;i++){
-        list.add(new ArrayList<>());
-       }
-       for(int i=0;i<times.length;i++){
-        int u = times[i][0];
-        int v = times[i][1];
-        int w = times[i][2];
-        list.get(u).add(new pair(v,w));
-       }
         int ans[] = new int[n+1];
-       Arrays.fill(ans,Integer.MAX_VALUE);
-       ans[k] = 0;
-
-       PriorityQueue<pair> pq = new PriorityQueue<>();
-       pq.add(new pair(k,0));
-       while(!pq.isEmpty()){
-            pair top = pq.remove();
-            int node = top.node;
-            int time = top.time;
-            if(top.time > ans[node])continue;
-            for(pair p: list.get(node)){
-                int totaltime = p.time + top.time;
-                if(totaltime< ans[p.node]){
-                    ans[p.node] = totaltime;
-                    pq.add(new pair(p.node,totaltime));
+        Arrays.fill(ans,Integer.MAX_VALUE);
+        ans[k] =0;
+        for(int i=0;i<n-1;i++){
+            for(int j=0;j<times.length;j++){
+               int a = times[j][0];
+               int b = times[j][1];
+               int c = times[j][2];
+               if(ans[a] == Integer.MAX_VALUE) continue;
+               else { 
+                    if(ans[a]+c < ans[b]){
+                    ans[b] = ans[a]+c;
+                    }
                 }
             }
-       }
-       int max =-1;
-       for(int i=1;i<ans.length;i++){
-        max =Math.max(max,ans[i]);
-       }
-       if(max==Integer.MAX_VALUE) return -1;
-       return max;
-
+        }
+        int min=0;
+        for(int i=1;i<ans.length;i++){
+            min = Math.max(ans[i],min);
+        }
+        if(min==Integer.MAX_VALUE) return -1;
+        return min;
     }
 }
