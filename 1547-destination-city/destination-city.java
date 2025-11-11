@@ -1,21 +1,13 @@
+// OPTIMIZED CODE
 class Solution {
     public String destCity(List<List<String>> paths) {
-       HashMap<String,Boolean> map = new HashMap<>();
-       for(int i=0;i<paths.size();i++){
-        String a = paths.get(i).get(0);
-        String b = paths.get(i).get(1);
-        map.put(a,false);
-        map.put(b,false);
+       HashSet<String> set = new HashSet<>();
+       for(List<String> p : paths){
+         set.add(p.get(0));
+       } 
+       for(List<String>p : paths){
+        if(!set.contains(p.get(1))) return p.get(1);
        }
-       for(int i=0;i<paths.size();i++){
-        String from = paths.get(i).get(0);
-        if(map.containsKey(from)){
-            map.put(from,true);
-        }
-       }
-        for(String key: map.keySet()){
-            if(!map.get(key)) return key;
-        }
-        return "";
+       return "";
     }
 }
