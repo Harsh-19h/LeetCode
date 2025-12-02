@@ -1,16 +1,18 @@
+// 2 pointer (optimzed O(1)space)
 class Solution {
     public int[] rearrangeArray(int[] nums) {
-        Queue<Integer> positive = new LinkedList<>();
-        Queue<Integer> negative = new LinkedList<>();
-       for(int i=0;i<nums.length;i++){
-        if(nums[i]>0) positive.add(nums[i]);
-        else negative.add(nums[i]);
-       } 
-       int k=0;
-       for(int i=0;i<nums.length/2;i++){
-        nums[k++] = positive.remove();
-        nums[k++] = negative.remove();
-       }
-       return nums;
+      int pi = 0;
+      int ni = 1;
+      int ans[] = new int[nums.length];
+      for(int i=0;i<nums.length;i++){
+        if(nums[i]>0){
+            ans[pi] = nums[i];
+            pi+=2;
+        } else{
+            ans[ni] = nums[i];
+            ni+=2;
+        }
+      } 
+      return ans; 
     }
 }
