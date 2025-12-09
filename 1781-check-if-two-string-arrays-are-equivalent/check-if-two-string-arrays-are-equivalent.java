@@ -10,8 +10,6 @@ class Solution {
         }
         String w1 =s1.toString();
         String w2 = s2.toString();
-        int ans= w1.compareTo(w2);
-        if(ans==0) return true;
-        else return false;
+        return w1.equals(w2);
     }
 }
