@@ -1,24 +1,17 @@
+// simple optimized way
 class Solution {
     public int minDeletionSize(String[] strs) {
-        int l = strs[0].length();
-        int n = strs.length;
-        char arr[][] = new char[n][l];
-        for(int i=0;i<n;i++){
-            String temp = strs[i];
-            for(int j=0;j<l;j++){
-                arr[i][j] = temp.charAt(j);
+      int l = strs[0].length();
+      int n = strs.length;  
+      int count=0;
+      for(int i=0;i<l;i++){
+        for(int j=1;j<n;j++){
+            if(strs[j].charAt(i)<strs[j-1].charAt(i)){
+                count++;
+                break;
             }
         }
-        //compairing
-        int count =0;
-        for(int j=0;j<l;j++){
-            for(int i=1;i<n;i++){
-                if(arr[i][j]<arr[i-1][j]){
-                    count++;
-                    break;
-                }
-            }
-        }
-        return count;
+      }
+      return count;
     }
 }
