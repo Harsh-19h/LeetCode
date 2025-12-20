@@ -1,3 +1,4 @@
+// OPTIMIZED basic improvement
 class Solution {
     public boolean buddyStrings(String s, String goal) {
         if(s.length()!=goal.length()) return false;
@@ -22,17 +23,6 @@ class Solution {
         }
 
          if(idx2==-1) return false;
-
-        StringBuilder sb = new StringBuilder();
-        for(int i=0;i<s.length();i++){
-            if(i==idx1){
-                sb.append(goal.charAt(idx2));
-            }else if(i==idx2){
-                sb.append(goal.charAt(idx1));
-            }
-            else sb.append(goal.charAt(i));
-        }
-        String temp = sb.toString();
-        return temp.equals(s);
+        return (s.charAt(idx2)==goal.charAt(idx1) && s.charAt(idx1)==goal.charAt(idx2));
     }
 }
