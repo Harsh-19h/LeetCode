@@ -1,12 +1,17 @@
+// (optimized)2 pointer approach
 class Solution {
     public boolean isSubsequence(String s, String t) {
-        for(int i=0;i<s.length();i++){
-            char c= s.charAt(i);
-            if(t.indexOf(c)==-1) return false;
-            int idx = t.indexOf(c);
-            String temp = t.substring(idx+1);
-            t =temp;
+        int i=0;
+        int j=0;
+        while(i<s.length() && j<t.length()){
+            if(s.charAt(i)==t.charAt(j)){
+                i++;
+                j++;
+            }
+            else if(s.charAt(i)!=t.charAt(j)){
+                j++;
+            }
         }
-        return true;
+        return i==s.length();
     }
 }
