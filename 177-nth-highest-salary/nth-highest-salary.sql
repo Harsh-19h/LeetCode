@@ -1,17 +1,13 @@
-CREATE FUNCTION getNthHighestSalary (@N INT)
-RETURNS INT
-AS
-BEGIN
-    IF (@N <= 0)
-        RETURN NULL;
-
-    RETURN (
-        SELECT salary
-        FROM (
-            SELECT DISTINCT salary
-            FROM Employee
-        ) AS e
-        ORDER BY e.salary DESC
-        OFFSET (@N - 1) ROWS FETCH NEXT 1 ROWS ONLY
+create function getNthHighestSalary(@N INT)
+returns INT
+as 
+begin
+    return(
+    select max(salary) 
+    from (select salary,
+            dense_rank() over(order by salary desc) as dr
+        from Employee
+        )t
+    where dr= @n
     );
-END;
+end;
