@@ -1,19 +1,27 @@
+// Optimized without Arraylist
 class Solution {
     public int sumFourDivisors(int[] nums) {
-        int ans =0;
-        for(int i=0;i<nums.length;i++){
-            ArrayList<Integer> temp = new ArrayList<>();
-            int curr = nums[i];
-            for(int j=1;j<=Math.sqrt(curr);j++){
-                if(curr%j==0) {
-                    temp.add(j);
-                        if(j!=curr/j) temp.add(curr/j);
+       int ans =0;
+       for(int i=0;i<nums.length;i++){
+        int curr = nums[i];
+        int sum =0;
+        int count =0;
+        for(int j=1;j*j<=curr;j++){
+            if(curr%j==0){
+                int d1 =j;
+                int d2 = curr/j;
+                if(d1==d2){
+                    count++;
+                    sum+=d1;
+                } else{
+                    count+=2;
+                    sum += d1 + d2;
                 }
-            }
-            if(temp.size()==4){
-                for(int val: temp) ans+=val;
+                if(count>4) break;
             }
         }
-        return ans;
+        if(count==4) ans+=sum;
+       } 
+       return ans;
     }
 }
