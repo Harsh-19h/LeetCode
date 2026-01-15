@@ -1,8 +1,8 @@
 class Solution {
     public int minimumDeletions(String word, int k) {
        int arr[] = new int[26];
-       for(char c: word.toCharArray()){
-        arr[c-'a']++;
+       for(int i=0;i<word.length();i++){
+        arr[word.charAt(i)-'a']++;
        } 
        int minDel = Integer.MAX_VALUE;
        for(int i=0;i<26;i++){
