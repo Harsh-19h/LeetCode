@@ -1,18 +1,23 @@
 class Solution {
-    public void dfs(int idx ,List<List<Integer>> rooms, boolean canopen[]){
-        canopen[idx] = true;
-        for(int i=0;i<rooms.get(idx).size();i++){
-            int curr = rooms.get(idx).get(i);
-            if(!canopen [curr]) dfs(curr,rooms,canopen);
+    public static void bfs(boolean visited[],List<List<Integer>> rooms,int start){
+        Queue<Integer> q = new LinkedList<>();
+        q.add(start);
+        visited[start] = true;
+        while(!q.isEmpty()){
+            int curr = q.remove();
+            for(int val: rooms.get(curr)){
+                if(visited[val]==false){
+                    q.add(val);
+                    visited[val] = true;
+                }
+            }
         }
     }
     public boolean canVisitAllRooms(List<List<Integer>> rooms) {
-        boolean ans = false;
-        int n = rooms.size();
-        boolean canopen[] = new boolean[n];
-        dfs(0,rooms,canopen);
-        for(int i=0;i<canopen.length;i++){
-            if(canopen[i]==false) return false;
+        boolean visited[] = new boolean [rooms.size()];
+        bfs(visited,rooms,0);
+        for(int i=0;i<visited.length;i++){
+            if(visited[i]==false) return false;
         }
         return true;
     }
