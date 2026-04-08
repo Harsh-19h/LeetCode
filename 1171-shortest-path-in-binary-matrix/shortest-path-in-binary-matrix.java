@@ -1,64 +1,69 @@
 class Solution {
-    class pair{
-        int i ;
-        int j;
-        pair(int i, int j){
-            this.i = i;
-            this.j = j;
-        }
-    }
     public int shortestPathBinaryMatrix(int[][] grid) {
-        Queue<pair> q = new LinkedList<>();
-        if(grid[0][0]==1 || grid[grid.length-1][grid[0].length-1]==1) return -1;
-        else{
-            q.add(new pair(0,0));
-            grid[0][0] = 1;
-        }
-        int level = 0;
-        while(!q.isEmpty()){
-            int n = q.size();
-            while(n-->0){
-                pair curr =q.remove();
-                int i = curr.i;
-                int j = curr.j;
+        int n = grid.length;
+        int m = grid[0].length;
+        int ans[][] = new int[n][m];
 
-                if(i==grid.length-1 && j==grid[0].length-1) return level+1;
-                if(i>0 && grid[i-1][j]==0){
-                    q.add(new pair(i-1,j));
-                    grid[i-1][j] = 1;
-                }
-                 if(i<grid.length-1 && grid[i+1][j]==0){
-                    q.add(new pair(i+1,j));
-                    grid[i+1][j] = 1;
-                }
-                 if(j>0 && grid[i][j-1]==0){
-                    q.add(new pair(i,j-1));
-                    grid[i][j-1] = 1;
-                }
-                 if(j<grid[0].length-1 && grid[i][j+1]==0){
-                    q.add(new pair(i,j+1));
-                    grid[i][j+1] = 1;
-                }
-                 if(i>0 && j>0 && grid[i-1][j-1]==0){
-                    q.add(new pair(i-1,j-1));
-                    grid[i-1][j-1] = 1;
-                }
-                 if(i<grid.length-1 && j<grid[0].length-1 &&  grid[i+1][j+1]==0){
-                    q.add(new pair(i+1,j+1));
-                    grid[i+1][j+1] = 1;
-                }
-                if(i>0 && j<grid[0].length-1 && grid[i-1][j+1]==0){
-                    q.add(new pair(i-1,j+1));
-                    grid[i-1][j+1] = 1;
-                }
-                if(i<grid.length-1 && j>0 && grid[i+1][j-1]==0){
-                    q.add(new pair(i+1,j-1));
-                    grid[i+1][j-1] = 1;
-                }
-            }
-            level++;
+        for(int i=0;i<n;i++){
+            Arrays.fill(ans[i], Integer.MAX_VALUE);
         }
+
+        if(grid[0][0]==1 || grid[n-1][m-1]==1) return -1;
+
+        PriorityQueue<int[]> pq = new PriorityQueue<>((x,y)-> x[0]-y[0]);
+
+        ans[0][0] = 1;  
+        pq.add(new int[]{1,0,0}); 
+
+        while(!pq.isEmpty()){
+            int curr[] = pq.remove();
+            int d = curr[0];
+            int i = curr[1];
+            int j = curr[2];
+
+            if(i==n-1 && j==m-1) return d;
+
+            if(i>0 && grid[i-1][j]==0 && d+1 < ans[i-1][j]){
+                ans[i-1][j] = d+1;
+                pq.add(new int[]{ans[i-1][j],i-1,j});
+            }
+
+            if(i<n-1 && grid[i+1][j]==0 && d+1 < ans[i+1][j]){
+                ans[i+1][j] = d+1;
+                pq.add(new int[]{ans[i+1][j],i+1,j});
+            }
+
+            if(j>0 && grid[i][j-1]==0 && d+1 < ans[i][j-1]){
+                ans[i][j-1] = d+1;
+                pq.add(new int[]{ans[i][j-1],i,j-1});
+            }
+
+            if(j<m-1 && grid[i][j+1]==0 && d+1 < ans[i][j+1]){
+                ans[i][j+1] = d+1;
+                pq.add(new int[]{ans[i][j+1],i,j+1});
+            }
+
+            if(i>0 && j>0 && grid[i-1][j-1]==0 && d+1 < ans[i-1][j-1]){
+                ans[i-1][j-1] = d+1;
+                pq.add(new int[]{ans[i-1][j-1],i-1,j-1});
+            }
+
+            if(i<n-1 && j<m-1 && grid[i+1][j+1]==0 && d+1 < ans[i+1][j+1]){
+                ans[i+1][j+1] = d+1;
+                pq.add(new int[]{ans[i+1][j+1],i+1,j+1});
+            }
+
+            if(i>0 && j<m-1 && grid[i-1][j+1]==0 && d+1 < ans[i-1][j+1]){
+                ans[i-1][j+1] = d+1;
+                pq.add(new int[]{ans[i-1][j+1],i-1,j+1});
+            }
+
+            if(i<n-1 && j>0 && grid[i+1][j-1]==0 && d+1 < ans[i+1][j-1]){
+                ans[i+1][j-1] = d+1;
+                pq.add(new int[]{ans[i+1][j-1],i+1,j-1});
+            }
+        }
+
         return -1;
-        
     }
 }
