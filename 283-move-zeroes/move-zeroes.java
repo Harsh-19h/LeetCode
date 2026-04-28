@@ -3,11 +3,13 @@ class Solution {
         int idx = 0;
         for(int i=0;i<nums.length;i++){
             if(nums[i]!=0){
-                nums[idx++] = nums[i];
+                if(i!= idx){
+                    int temp = nums[i];
+                    nums[i] = nums[idx];
+                    nums[idx] = temp;
+                }
+                 idx++;
             }
-        }
-        for(int i=idx;i<nums.length;i++){
-            nums[i] = 0;
         }
     }
 }
