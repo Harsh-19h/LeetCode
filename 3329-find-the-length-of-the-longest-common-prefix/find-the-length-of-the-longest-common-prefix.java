@@ -13,8 +13,8 @@ class Solution {
             int curr = arr2[i];
             while(curr>0){
                 if(set.contains(curr)){
-                    String s = String.valueOf(curr);
-                    ans = Math.max(ans,s.length());
+                    
+                    ans = Math.max(ans,(int)Math.log10(curr)+1);
                 }
                 curr/=10;
             }
