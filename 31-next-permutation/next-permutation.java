@@ -1,28 +1,35 @@
 class Solution {
-    public void nextPermutation(int[] nums) {
-        int idx=-1;
-        int idx2=-1;
-        for(int i=nums.length-2;i>=0;i--){
-            if(nums[i]<nums[i+1]) {
+    public static void reverse(int arr[], int i,int j){
+        while(i<j){
+            int temp = arr[i];
+            arr[i] = arr[j];
+            arr[j] = temp;
+            i++; j--;
+        }
+    }
+    public void nextPermutation(int[] arr) {
+        int n = arr.length;
+        int idx = -1;
+        for(int i=n-2;i>=0;i--){
+            if(arr[i]<arr[i+1]){
                 idx = i;
                 break;
             }
-            
         }
-        if(idx==-1){
-            Arrays.sort(nums);
-            return;
+        if(idx ==-1){
+            reverse(arr,0,n-1);
         }
-        for(int i=nums.length-1;i>=0;i--){
-            if(nums[i]>nums[idx]) {
-                idx2 =i;
-                int temp = nums[idx];
-                nums[idx] = nums[idx2];
-                nums[idx2] = temp;
-                break;
+        else{
+            for(int i=n-1;i>=0;i--){
+                if(arr[i]>arr[idx]){
+                    int temp = arr[i];
+                    arr[i] = arr[idx];
+                    arr[idx] = temp;
+                    break;
+                }
             }
+            reverse(arr,idx+1,n-1);
         }
-       Arrays.sort(nums,idx+1,nums.length);
-       return ;
+    return ;
     }
 }
