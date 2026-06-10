@@ -4,11 +4,13 @@ class Solution {
         int i=0;
         int j=numbers.length-1;
         while(i<j){
-            if(numbers[i] + numbers[j] == target){
+            int sum = numbers[i] + numbers[j];
+            if(sum == target){
                 ans[0] = i+1;
                 ans[1] = j+1;
-                break;
-            } else if(numbers[i] + numbers[j] < target) i++;
+                return ans;
+            }
+            else if(sum<target) i++;
             else j--;
         }
         return ans;
