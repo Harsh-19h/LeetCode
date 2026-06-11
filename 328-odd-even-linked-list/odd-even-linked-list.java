@@ -1,36 +1,23 @@
-
+// MORE SIMPLE AND OPTIMIZED (WITHOUT EVEN DUMMY NODE)
 class Solution {
     public ListNode oddEvenList(ListNode head) {
-        ListNode odd = new ListNode(0);
-        ListNode even =new ListNode(0);
 
-        ListNode s1 =odd;
-        ListNode s2 = even;
-
-        ListNode temp = head;
-
-        int count = 1;
-        while(temp!=null){
-            if(count%2!=0){
-                odd.next = temp;
-                odd = odd.next;
-            }
-            else{
-                even.next = temp;
-                even = even.next;
-            }
-            temp = temp.next;
-            count++;
-        }
-        even.next = null;
-
-        s1= s1.next;
-        s2 = s2.next;
-        odd.next = s2;
-
-        return s1;
-
+        if(head==null) return null;
         
+        ListNode odd = head;
+        ListNode even = head.next;
+        ListNode evenHead = even;
 
+        while(even!=null && even.next!=null){
+            odd.next = even.next;
+            odd = odd.next;
+
+            even.next = odd.next;
+            even = even.next;
+        }
+
+        odd.next = evenHead;
+
+        return head;
     }
 }
