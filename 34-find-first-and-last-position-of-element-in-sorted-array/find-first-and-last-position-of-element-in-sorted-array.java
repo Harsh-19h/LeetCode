@@ -1,28 +1,40 @@
 class Solution {
-    public int[] binarysearch(int[]arr,int[] nums, int start, int end,int target){
-        if(start>end) return arr;
-        int mid = (start+end)/2;
-        
-        if(nums[mid]==target){
-            if(arr[0]==-1 || mid<arr[0]){
-                arr[0]= mid;
+    public static void lower(int nums[], int ans[] ,int l, int r,int target){
+        while(l<=r){
+            int mid = l+(r-l)/2;
+            if(nums[mid]==target){
+                ans[0] = mid;
+                r = mid-1;
             }
-            if(arr[1]==-1|| arr[1]<mid){
-                arr[1] =mid;
+            else if(nums[mid]<target){
+                l = mid+1;
             }
-            binarysearch(arr,nums,start,mid-1,target);
-            binarysearch(arr,nums,mid+1,end,target);
+            else r = mid-1;
         }
-         else if(nums[mid]>target){
-            return binarysearch(arr,nums,start,mid-1,target);
+    }
+    public static void upper (int nums[], int ans[], int l, int r,int target){
+        while(l<=r){
+            int mid = l+(r-l)/2;
+            if(nums[mid]==target){
+                ans[1] = mid;
+                l = mid+1;
+            }
+            else if(nums[mid]<target){
+                l = mid+1;
+            }
+            else r = mid-1;
         }
-        else{
-           return binarysearch(arr,nums,mid+1,end,target);
-        }
-        return arr;
+
     }
     public int[] searchRange(int[] nums, int target) {
-         int arr[] ={-1,-1};
-     return binarysearch(arr,nums,0,nums.length-1,target);
+      int ans[] = {-1,-1};
+      int l = 0;
+      int r = nums.length-1;
+
+        lower(nums,ans,l,r,target);
+        upper(nums,ans,l,r,target);
+        
+        return ans;
+      
     }
 }
