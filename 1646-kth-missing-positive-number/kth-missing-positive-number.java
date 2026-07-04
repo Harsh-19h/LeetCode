@@ -1,22 +1,23 @@
 class Solution {
     public int findKthPositive(int[] arr, int k) {
+        
+        int val = 1;
+        int count = 0;
+        int idx = 0;
 
-       HashSet<Integer> set = new HashSet<>();
+        while(idx!= arr.length){
 
-       for(int i=0;i<arr.length;i++){
-        set.add(arr[i]);
-       } 
-
-       int count = 0;
-       int val =1;
-       while(count!=k){
-            if(!set.contains(val)){
+            if(arr[idx]==val){
+                idx++;           
+            }else{
                 count++;
+                if(count==k) return val;
             }
-            if(count==k) return val;
-            val++;
-       }
-       return val;
 
+            val++;
+        }
+        
+        int diff = k-count-1;
+        return val+diff;
     }
 }
