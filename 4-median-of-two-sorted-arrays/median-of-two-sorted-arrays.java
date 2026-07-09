@@ -1,21 +1,32 @@
 class Solution {
     public double findMedianSortedArrays(int[] nums1, int[] nums2) {
-        int arr[] = new int [nums1.length+nums2.length];
-        for(int i=0;i<nums1.length;i++){
-            arr[i] = nums1[i];
+        int n1 = nums1.length;
+        int n2 = nums2.length;
+        if(n1>n2) return findMedianSortedArrays(nums2,nums1);
+
+        int n = n1+n2;
+        int s =0;
+        int e = n1;
+        int left = (n1+n2+1)/2;
+        while(s<=e){
+            int mid1 = s+(e-s)/2;
+            int mid2 = left -mid1;
+            int l1 = Integer.MIN_VALUE;
+            int l2 = Integer.MIN_VALUE;
+            int r1 = Integer.MAX_VALUE;
+            int r2 = Integer.MAX_VALUE;
+            if(mid1<n1) r1 = nums1[mid1];
+            if(mid2<n2) r2 = nums2[mid2];
+            if(mid1-1>=0) l1 =nums1[mid1-1];
+            if(mid2-1>=0) l2 = nums2[mid2-1];
+
+            if(l1<=r2 && l2<=r1){
+                if(n%2!=0) return Math.max(l1,l2);
+                else return ((double) (Math.max(l1,l2) + Math.min(r1,r2)))/2.0;
+            }
+            else if(l1>r2) e = mid1-1;
+            else s = mid1+1;
         }
-        for(int i=nums1.length;i<arr.length;i++){
-            arr[i] = nums2[i-nums1.length];
-        }
-        Arrays.sort(arr);
-        if(arr.length%2!=0){
-            int idx = arr.length/2;
-            return arr[idx];
-        } else{
-            int idx1 = arr.length/2;
-            int idx2 = (arr.length/2) -1;
-            double ans = (arr[idx1] + arr[idx2]) /2.0;
-            return ans;
-        }
+        return 0;  
     }
 }
