@@ -3,30 +3,31 @@ class Solution {
 
         s = s.trim();
 
-        Stack<String> st = new Stack<>();
+        Stack<StringBuilder> st = new Stack<>();
         StringBuilder sb = new StringBuilder();
 
         for(int i=0;i<s.length();i++){
 
             if(s.charAt(i)==' '){
                 if(sb.length()!=0){
-                    st.push(sb.toString());
+                    st.push(sb);
                     sb = new StringBuilder();
                 } 
             }
             else sb.append(s.charAt(i));
         }
 
-        if(sb.length()!=0)st.push(sb.toString());
-        s="";
+        if(sb.length()!=0)st.push(sb);
+        StringBuilder ans = new StringBuilder();
         
         while(!st.isEmpty()){
             if(st.size()==1){
-                s+= st.pop();
+                ans.append(st.pop());
                 break;
             }
-            s+= st.pop() + " ";
+            ans.append(st.pop());
+            ans.append(" ");
         }
-        return s;
+        return ans.toString();
     }
 }
