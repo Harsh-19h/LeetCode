@@ -1,38 +1,32 @@
 class Solution {
-    class pair implements Comparable<pair>{
-        char ch ;
+    class pair{
+        char key;
         int val;
-        pair(char ch, int val){
-            this.ch = ch;
+        pair(char key, int val){
+            this.key = key;
             this.val = val;
-        }
-       public int  compareTo(pair p){
-            if(this.val==p.val) return this.ch-p.ch;
-            return this.val-p.val;
         }
     }
     public String frequencySort(String s) {
-        HashMap<Character,Integer> map = new HashMap<>();
-        for(int i=0;i<s.length();i++){
-            char ch = s.charAt(i);
-            if(map.containsKey(ch)){
-                int freq = map.get(ch);
-                map.put(ch,freq+1);
-            } else map.put(ch,1);
-        }
-        PriorityQueue<pair> pq = new PriorityQueue<>(Collections.reverseOrder());
-        for(char key: map.keySet()){
-            int freq = map.get(key);
-            pq.add(new pair(key,freq));
-        }
-        StringBuilder ans = new StringBuilder();
-        while(pq.size()!=0){
-            pair temp = pq.remove();
-             int count = temp.val;
-             for(int i=0;i<count;i++){
-                ans.append(temp.ch);
-             }
-        }
-        return ans.toString();
+       StringBuilder ans = new StringBuilder();
+
+       HashMap<Character, Integer> map = new HashMap<>();
+       for(int i=0;i<s.length();i++){
+        map.put(s.charAt(i),map.getOrDefault(s.charAt(i),0)+1);
+       }
+
+       PriorityQueue<pair> pq = new PriorityQueue<>((a,b)->b.val-a.val);
+       for(char Key: map.keySet()){
+        int v = map.get(Key);
+        pq.add(new pair(Key,v));
+       }
+
+       while(!pq.isEmpty()){
+        pair curr = pq.remove();
+            for(int i=0;i<curr.val;i++){
+                ans.append(curr.key);
+            }
+       }
+       return ans.toString();
     }
 }
