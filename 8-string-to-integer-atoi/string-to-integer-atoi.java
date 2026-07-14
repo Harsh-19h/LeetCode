@@ -1,49 +1,36 @@
 class Solution {
     public int myAtoi(String s) {
-       s = s.trim();
-       if(s.length()==0) return 0;
+        long ans = 0;
+        boolean positive =true;
+        int idx =0;
+        while(idx<s.length() && s.charAt(idx)==' ') idx++;
+          if(idx==s.length()) return (int)ans;
 
-       StringBuilder ans = new StringBuilder();
-       int idx =0;
-
-       if(s.charAt(idx)=='-' || s.charAt(idx) == '+'){
-        ans.append(s.charAt(idx));
+        if (idx < s.length() && s.charAt(idx) == '-') {
+        positive = false;
         idx++;
-       }
-       while (idx < s.length() && s.charAt(idx) == '0'){
-        idx++;
-       }
+        } else if (idx < s.length() && s.charAt(idx) == '+') {
+            idx++;
+        }
 
-       for(int i=idx;i<s.length();i++){
-        char ch = s.charAt(i);
-        if(ch>='0' && ch<='9') ans.append(ch);
-        else break;
-       } 
+        while(idx<s.length() && s.charAt(idx)=='0' ) idx++;
+        
+        if(idx==s.length()) return (int)ans;
 
-       long res=0;
-       boolean isnegative = false;
-       if(ans.length()==0) return 0;
+        int limit = positive?7:8;
 
-       for(int i=0;i<ans.length();i++){
-            char c= ans.charAt(i);
-            if(c=='-'){
-                isnegative = true;
-                continue;
-            }
-            if (c == '+') continue;
+        for(int i =idx;i<s.length();i++){
+            if(s.charAt(i)>='0' && s.charAt(i)<='9'){
+                int curr =  s.charAt(i)-'0';
 
-            int digit = c - '0';
+                if(ans > Integer.MAX_VALUE/10 || ans ==Integer.MAX_VALUE/10 && curr>limit){
+                    return positive ? Integer.MAX_VALUE: Integer.MIN_VALUE;
+                }
 
-            if (!isnegative && res > (Integer.MAX_VALUE - digit) / 10)
-                return Integer.MAX_VALUE;
-
-            if (isnegative && -res < (Integer.MIN_VALUE + digit) / 10)
-                return Integer.MIN_VALUE;
-
-            res = res * 10 + digit;
-       }
-
-       if(isnegative) res = -res;
-       return (int) res;
+                ans = ans*10 + curr;
+            }else break;
+        }
+        if(positive) return (int )ans;
+        else return (int)-ans;
     }
 }
