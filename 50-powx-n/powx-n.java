@@ -1,19 +1,13 @@
 class Solution {
+    public static double calculate(double x, long m){
+        if(m == 0 ) return 1;
+        if(m<0) return calculate(1/x, -m);
+        if(m%2==0) return calculate(x*x,m/2);
+
+        return x*calculate(x*x,(m-1)/2);
+    }
     public double myPow(double x, int n) {
-       long N =n;
-       if(N<0){
-        x=1/x;
-        N=-N;
-       } 
-       double result =1.0;
-       double currproduct = x;
-       while(N>0){
-        if(N%2==1){
-            result*=currproduct;
-        }
-        currproduct *= currproduct;
-        N/=2;
-       }
-       return result;
+        long m = n;
+        return calculate(x,m);
     }
 }
