@@ -1,22 +1,24 @@
-// Binary exponentiation or fast exponentiation concept (very easy)
-
 class Solution {
-    static final int MOD = 1000000007;
 
-    public static int pow(int a, long b){
-        if(b==0) return 1;
+    static final long MOD = 1_000_000_007;
 
-        long half = pow(a,b/2); 
-        long ans = (half*half) % MOD;
+    public static long calculate(long x, long y) {
+        if (y == 0)
+            return 1;
 
-        if(b%2!=0) ans = (ans*a) % MOD;
-        return (int)ans;
+        if (y % 2 == 0)
+            return calculate((x * x) % MOD, y / 2);
+
+        return (x * calculate((x * x) % MOD, (y - 1) / 2)) % MOD;
     }
-    public int countGoodNumbers(long n) {
-        long evenplaces = (n+1)/2;
-        long oddplaces = n/2;
 
-        long count = ( 1L* pow(5,evenplaces) * pow(4,oddplaces)) % MOD;
-        return (int) count;
+    public int countGoodNumbers(long n) {
+
+        long even = (n + 1) / 2;
+        long odd = n / 2;
+
+        long ans = (calculate(5, even) * calculate(4, odd)) % MOD;
+
+        return (int) ans;
     }
 }
