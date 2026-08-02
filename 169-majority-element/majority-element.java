@@ -1,20 +1,19 @@
 class Solution {
     public int majorityElement(int[] nums) {
-        int curr = nums[0];
-        int freq = 1;
+        int ele = nums[0];
+        int count = 1;
+
         for(int i=1;i<nums.length;i++){
-            if(nums[i]==curr){
-                freq++;
-            } 
+            if(nums[i]== ele) count++;
             else{
-                freq--;
+                count--;
+                if(count ==0){
+                    ele = nums[i];
+                    count =1;
+                }
             }
 
-            if(freq==0) {
-                curr = nums[i];
-                freq=1;
-            }
         }
-        return curr;
+        return ele;
     }
 }
