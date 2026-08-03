@@ -1,35 +1,42 @@
 class Solution {
-    public static void reverse(int arr[], int i,int j){
-        while(i<j){
-            int temp = arr[i];
-            arr[i] = arr[j];
-            arr[j] = temp;
-            i++; j--;
-        }
-    }
-    public void nextPermutation(int[] arr) {
-        int n = arr.length;
+    public void nextPermutation(int[] nums) {
+
+        int n = nums.length;
         int idx = -1;
-        for(int i=n-2;i>=0;i--){
-            if(arr[i]<arr[i+1]){
-                idx = i;
+
+        for(int i=n-1;i>0;i--){
+            if(nums[i-1]<nums[i]){
+                idx = i-1;
                 break;
             }
         }
-        if(idx ==-1){
-            reverse(arr,0,n-1);
-        }
-        else{
-            for(int i=n-1;i>=0;i--){
-                if(arr[i]>arr[idx]){
-                    int temp = arr[i];
-                    arr[i] = arr[idx];
-                    arr[idx] = temp;
-                    break;
+
+        if(idx==-1){
+            Arrays.sort(nums);
+        } else {
+            int min =Integer.MAX_VALUE ;
+            int id = -1;
+            for(int i=idx+1;i<n;i++){
+                if(nums[i]>nums[idx]){
+                    if(id==-1){
+                        id = i;
+                        min = Math.min(nums[i],min);
+                    }
+                    else {
+                        if(nums[i]<min){
+                            id = i;
+                            min = nums[i];
+                        }
+                    } 
                 }
             }
-            reverse(arr,idx+1,n-1);
+
+            int temp = nums[idx];
+            nums[idx] = nums[id];
+            nums[id] = temp;
+
+            Arrays.sort(nums,idx+1,n);
         }
-    return ;
+
     }
 }
