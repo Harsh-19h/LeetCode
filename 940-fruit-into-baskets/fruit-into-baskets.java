@@ -1,26 +1,26 @@
 class Solution {
     public int totalFruit(int[] fruits) {
-     int max =Integer.MIN_VALUE;
-     HashMap<Integer,Integer> map = new HashMap<>();
-     int low =0;
-     int high = 0;
-     while(high<fruits.length){
-        if(map.containsKey(fruits[high])){
-            int freq = map.get(fruits[high]);
-            map.put(fruits[high],freq+1);
-        }else map.put(fruits[high],1);
-        high++;
-        while(map.size()>2){
-          int f = map.get(fruits[low]);
-            map.put(fruits[low], f - 1);
-            if (map.get(fruits[low]) == 0) {
-            map.remove(fruits[low]);
+        HashMap<Integer,Integer> map = new HashMap<>();
+        int i =0;
+        int ans = 0;
+        for(int j=0;j<fruits.length;j++){
+           map.put(fruits[j],map.getOrDefault(fruits[j],0)+1);
+
+           if(map.size()>2){
+            while(map.size()>2){
+                int freq = map.get(fruits[i]);
+                map.put(fruits[i],freq-1);
+
+                if(map.get(fruits[i])==0){
+                    map.remove(fruits[i]);
+                }
+
+                i++;
             }
-            low++;
+           }
+
+           ans = Math.max(ans, (j-i+1));
         }
-        int curr = high-low;
-        max = Math.max(curr,max);
-     }  
-     return max;
+        return ans;
     }
 }
