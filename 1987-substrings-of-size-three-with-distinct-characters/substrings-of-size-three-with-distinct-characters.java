@@ -1,28 +1,18 @@
 class Solution {
-    public static boolean helper(String curr){
-        HashSet<Character> set = new HashSet<>();
-        for(int i=0;i<curr.length();i++){
-            if(set.contains(curr.charAt(i))) return false;
-            else set.add(curr.charAt(i));
-        }
-        return true;
-    }
     public int countGoodSubstrings(String s) {
-        int ans = 0;
-        int i  = 0;
-        for(int j=0;j<s.length();j++){
-           
-            while(j-i+1>3){
-                i++;
-            }
+        int count = 0;
 
-            if(j-i+1 == 3){
-                String curr = s.substring(i,j+1);
-                
-                if(helper(curr)) ans++;
+        for (int i = 0; i <= s.length() - 3; i++) {
+
+            char a = s.charAt(i);
+            char b = s.charAt(i + 1);
+            char c = s.charAt(i + 2);
+
+            if (a != b && b != c && a != c) {
+                count++;
             }
         }
 
-        return ans;
+        return count;
     }
 }
